@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior:smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kidspire — Children's Ministry Portal by 5stones Software</title>
+<meta name="description" content="Kidspire is an open source children's ministry portal with family accounts, event registration, and two-way Planning Center sync. Self-host on Railway in minutes.">
+<meta name="author" content="5stones Software">
+<meta property="og:title" content="Kidspire — Children's Ministry Portal">
+<meta property="og:description" content="Open source children's ministry portal with family accounts, event registration, and Planning Center sync.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://5stones.io/kidspire">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--turquoise:#00C5CD;
+--tussock:#C39953;
+--chenin:#DECC6F;
+--jade:#EDF6E4;
+--verde:#F0FAF5;
+--campfire:#88654E;
+--body-text:#2C1A0E;
+--muted:#8B6855;
+--border:#E8D5C4;
+--footer-bg:#2C1A0E;
+--page-bg:#FDFAF7;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--body-text);background:var(--page-bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:100;background:var(--page-bg);padding:0 2rem;transition:box-shadow .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.scrolled{border-bottom-color:var(--border);box-shadow:0 2px 16px rgba(44,26,14,.08)}
+.nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.25rem;color:var(--campfire)}
+.nav-links{display:flex;align-items:center;gap:1.5rem}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--campfire);transition:color .2s}
+.nav-links a:hover{color:var(--turquoise)}
+.nav-links .btn-primary{color:#fff}
+.nav-links .btn-primary:hover{color:#fff;background:#00a0a8;border-color:#00a0a8}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:.6rem 1.4rem;border-radius:1rem;font-weight:600;font-size:.9rem;transition:all .2s;cursor:pointer;border:2px solid transparent}
+.btn-primary{background:var(--turquoise);color:#fff;border-color:var(--turquoise)}
+.btn-primary:hover{background:#00b0b8;border-color:#00b0b8}
+.btn-outline{background:transparent;color:var(--campfire);border-color:var(--campfire)}
+.btn-outline:hover{background:var(--campfire);color:#fff}
+
+/* Sections */
+.section{padding:5rem 2rem}
+.section-inner{max-width:1120px;margin:0 auto}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.eyebrow-tussock{color:var(--tussock)}
+.eyebrow-turquoise{color:var(--turquoise)}
+h1,h2,h3{color:var(--campfire);line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800}
+h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+
+/* Hero */
+.hero-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.hero-text p{margin-top:1rem;font-size:1.1rem;color:var(--muted);max-width:540px}
+.hero-buttons{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.hero-muted{margin-top:1rem;font-size:.8rem;color:var(--muted)}
+
+/* Wave dividers */
+.wave-divider{width:100%;line-height:0;overflow:hidden}
+.wave-divider svg{width:100%;height:auto;display:block}
+
+/* Cards */
+.feature-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.card{background:#fff;border:1px solid var(--border);border-radius:1.5rem;padding:2rem 1.5rem;position:relative;overflow:hidden}
+.card h3{margin:.75rem 0 .5rem}
+.card p{font-size:.9rem;color:var(--muted);line-height:1.5}
+.card-icon{width:40px;height:40px;color:var(--turquoise)}
+.card-stone{position:absolute;top:12px;right:14px;opacity:.25}
+
+/* Badges */
+.badges{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}
+.badge{padding:.4rem 1rem;border-radius:2rem;font-size:.8rem;font-weight:600}
+.badge-turquoise{background:var(--turquoise);color:#fff}
+.badge-tussock{background:transparent;color:var(--tussock);border:2px solid var(--tussock)}
+
+/* Deploy */
+.deploy-header{text-align:center;max-width:680px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.step{text-align:center}
+.step-number{font-size:2.5rem;font-weight:800;color:var(--turquoise)}
+.step h3{margin:.5rem 0}
+.step p{font-size:.9rem;color:var(--muted)}
+.step-icon{margin:0 auto 1rem;width:56px;height:56px;color:var(--turquoise)}
+.deploy-footer{text-align:center;margin-top:2.5rem}
+.deploy-footer p{font-size:.85rem;color:var(--muted);margin-top:.75rem}
+
+/* How it works */
+.how-header{text-align:center;max-width:680px;margin:0 auto}
+.how-header p{margin-top:1rem;color:var(--muted);font-size:1.05rem}
+.how-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+
+/* Footer */
+.footer-wave{width:100%;line-height:0;overflow:hidden}
+.footer{background:var(--footer-bg);color:var(--page-bg);padding:4rem 2rem 0}
+.footer-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+.footer h4{color:var(--chenin);font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.footer p{font-size:.9rem;line-height:1.6;opacity:.8}
+.footer a{transition:color .2s}
+.footer a:hover{color:var(--turquoise)}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem;font-size:.9rem}
+.footer-links a{color:var(--turquoise)}
+.footer-links .muted-link{color:rgba(253,250,247,.45)}
+.footer-bottom{border-top:1px solid rgba(253,250,247,.1);margin-top:3rem;padding:1.5rem 2rem;text-align:center;font-size:.8rem;opacity:.6}
+.footer-logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.1rem;color:var(--tussock);margin-bottom:.75rem}
+
+/* Back link */
+.back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:500;color:var(--muted);transition:color .2s}
+.back-link:hover{color:var(--turquoise)}
+.back-link svg{width:16px;height:16px}
+
+@media(max-width:768px){
+.hero-layout{grid-template-columns:1fr}
+.feature-cards,.how-cards{grid-template-columns:1fr}
+.steps{grid-template-columns:1fr;gap:2.5rem}
+.footer-inner{grid-template-columns:1fr;gap:2rem}
+.nav-links .gh-text{display:none}
+.hero-illustration{max-width:320px;margin:0 auto}
+}
+@media(max-width:480px){
+.section{padding:3rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+<a href="index.html" class="nav-logo">
+<svg width="32" height="40" viewBox="0 0 32 40" fill="none">
+<ellipse cx="16" cy="36" rx="8" ry="4" fill="url(#sg1)"/>
+<ellipse cx="16" cy="28.5" rx="7" ry="3.6" fill="url(#sg2)"/>
+<ellipse cx="16" cy="21.5" rx="6.2" ry="3.2" fill="url(#sg3)"/>
+<ellipse cx="16" cy="15.2" rx="5.4" ry="2.9" fill="url(#sg4)"/>
+<ellipse cx="16" cy="9.5" rx="4.6" ry="2.6" fill="url(#sg5)"/>
+<ellipse cx="13" cy="34.5" rx="3" ry="1.2" fill="rgba(255,255,255,.25)" transform="rotate(-8 13 34.5)"/>
+<ellipse cx="13.5" cy="27" rx="2.6" ry="1" fill="rgba(255,255,255,.25)" transform="rotate(-8 13.5 27)"/>
+<ellipse cx="13.8" cy="20.2" rx="2.2" ry=".9" fill="rgba(255,255,255,.25)" transform="rotate(-8 13.8 20.2)"/>
+<ellipse cx="14" cy="14" rx="1.9" ry=".8" fill="rgba(255,255,255,.25)" transform="rotate(-8 14 14)"/>
+<ellipse cx="14.2" cy="8.5" rx="1.6" ry=".7" fill="rgba(255,255,255,.25)" transform="rotate(-8 14.2 8.5)"/>
+<defs>
+<linearGradient id="sg1" x1="8" y1="32" x2="24" y2="40"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg2" x1="9" y1="25" x2="23" y2="32"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg3" x1="10" y1="18" x2="22" y2="25"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg4" x1="11" y1="12" x2="21" y2="18"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg5" x1="11" y1="7" x2="21" y2="12"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+</defs>
+</svg>
+5stones
+</a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="https://github.com/5stones-io" target="_blank" rel="noopener noreferrer" class="gh-text">GitHub</a>
+<a href="https://github.com/5stones-io/kidspire" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get Kidspire</a>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="section" style="padding-bottom:2rem">
+<div class="section-inner">
+<div class="hero-layout fade-in">
+<!-- Illustration -->
+<div class="hero-illustration">
+<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="hs" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+</defs>
+<rect x="120" y="140" width="160" height="140" rx="12" fill="#88654E"/>
+<rect x="130" y="150" width="140" height="120" rx="8" fill="#A07850"/>
+<path d="M100 145 L200 70 L300 145Z" fill="#C39953"/>
+<rect x="190" y="40" width="20" height="35" rx="4" fill="#C39953"/>
+<circle cx="200" cy="38" r="10" fill="#00C5CD" opacity=".8"/>
+<circle cx="200" cy="38" r="14" fill="#00C5CD" opacity=".2"/>
+<rect x="175" y="220" width="50" height="60" rx="25" ry="25" fill="#5E3F2E"/>
+<rect x="145" y="175" width="30" height="35" rx="6" fill="#DECC6F" opacity=".7"/>
+<rect x="225" y="175" width="30" height="35" rx="6" fill="#DECC6F" opacity=".7"/>
+<line x1="160" y1="175" x2="160" y2="210" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<line x1="145" y1="192" x2="175" y2="192" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<line x1="240" y1="175" x2="240" y2="210" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<line x1="225" y1="192" x2="255" y2="192" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<ellipse cx="200" cy="285" rx="160" ry="20" fill="#A0D6B4" opacity=".4"/>
+<g fill="#5E3F2E" opacity=".5">
+<ellipse cx="130" cy="252" rx="6" ry="6"/>
+<rect x="125" y="258" width="10" height="22" rx="4"/>
+<ellipse cx="110" cy="255" rx="5.5" ry="5.5"/>
+<rect x="105.5" y="260" width="9" height="20" rx="4"/>
+<ellipse cx="122" cy="262" rx="4" ry="4"/>
+<rect x="119" y="266" width="6" height="14" rx="3"/>
+</g>
+</svg>
+</div>
+<!-- Text -->
+<div>
+<a href="index.html" class="back-link">
+<svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+Back to 5stones
+</a>
+<p class="eyebrow eyebrow-tussock" style="margin-top:1rem">Children's Ministry Portal</p>
+<h1>Kidspire</h1>
+<p style="font-size:1.15rem;color:var(--campfire);font-weight:600;margin:.5rem 0">The children's ministry portal your families will actually use</p>
+<p>Kidspire gives your kids ministry a public-facing events page, a family portal for registrations and profiles, and seamless two-way sync with Planning Center Online — all in one self-hostable package.</p>
+<div class="badges">
+<span class="badge badge-turquoise">Open source · MIT licensed</span>
+<span class="badge badge-tussock">Deploy on Railway in minutes</span>
+</div>
+<div class="hero-buttons">
+<a href="https://github.com/5stones-io/kidspire" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get Kidspire on GitHub</a>
+<a href="https://github.com/5stones-io/kidspire" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View Source</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WAVE: page-bg → jade -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 40 Q150 0 300 30 Q450 65 600 35 Q750 5 900 40 Q1050 70 1200 30 L1200 80 L0 80Z" fill="#EDF6E4"/>
+</svg>
+</div>
+
+<!-- FEATURES -->
+<section class="section" style="background:#EDF6E4;padding-top:2rem">
+<div class="section-inner">
+<div style="text-align:center;max-width:680px;margin:0 auto" class="fade-in">
+<p class="eyebrow eyebrow-turquoise">What's Inside</p>
+<h2>Everything your kids ministry needs</h2>
+<p style="margin-top:1rem;color:var(--muted);font-size:1.05rem">Three core features that work together to give families a seamless experience and your staff total visibility.</p>
+</div>
+<div class="feature-cards fade-in">
+<div class="card">
+<svg class="card-stone" width="24" height="16" viewBox="0 0 24 16"><ellipse cx="12" cy="8" rx="12" ry="8" fill="url(#hs)" opacity=".3"/></svg>
+<svg class="card-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="14" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M8 34c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+<h3>Family Portal</h3>
+<p>One account for the whole family. Register children for events, manage profiles, and stay connected. Parents see everything in one place.</p>
+</div>
+<div class="card">
+<svg class="card-stone" width="20" height="14" viewBox="0 0 20 14"><ellipse cx="10" cy="7" rx="10" ry="7" fill="url(#hs)" opacity=".25"/></svg>
+<svg class="card-icon" viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="24" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M6 16h28" stroke="currentColor" stroke-width="2.5"/><circle cx="14" cy="26" r="3" stroke="currentColor" stroke-width="2"/></svg>
+<h3>Event Registration</h3>
+<p>Public event listings with per-child signup forms. Families register in minutes. Staff see it instantly. No spreadsheets required.</p>
+</div>
+<div class="card">
+<svg class="card-stone" width="16" height="11" viewBox="0 0 16 11"><ellipse cx="8" cy="5.5" rx="8" ry="5.5" fill="url(#hs)" opacity=".2"/></svg>
+<svg class="card-icon" viewBox="0 0 40 40" fill="none"><path d="M12 20h-2a4 4 0 01-4-4v-2a4 4 0 014-4h2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M28 20h2a4 4 0 004-4v-2a4 4 0 00-4-4h-2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M16 14l4 6 4-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 26l4-6 4 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h3>Planning Center Sync</h3>
+<p>Connect your PCO account once. Family records, children, and events sync automatically — both directions. Always in sync, never stale.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WAVE: jade → page-bg -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0 L0 40 Q150 70 300 45 Q450 15 600 50 Q750 75 900 40 Q1050 10 1200 45 L1200 0Z" fill="#EDF6E4"/>
+</svg>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:var(--page-bg)">
+<div class="section-inner">
+<div class="how-header fade-in">
+<p class="eyebrow eyebrow-tussock">How It Works</p>
+<h2>Built for real church workflows</h2>
+<p>Kidspire connects the dots between your public presence and your internal systems.</p>
+</div>
+<div class="how-cards fade-in">
+<div class="card">
+<svg class="card-icon" viewBox="0 0 40 40" fill="none" style="color:var(--campfire)"><rect x="6" y="6" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2.5"/><path d="M14 20h12M20 14v12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+<h3>Public Events Page</h3>
+<p>Your church gets a beautiful public page listing upcoming kids events. Families browse and register without needing to call the office.</p>
+</div>
+<div class="card">
+<svg class="card-icon" viewBox="0 0 40 40" fill="none" style="color:var(--campfire)"><path d="M12 8h16a4 4 0 014 4v16a4 4 0 01-4 4H12a4 4 0 01-4-4V12a4 4 0 014-4z" stroke="currentColor" stroke-width="2.5"/><path d="M14 18l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h3>Staff Dashboard</h3>
+<p>See registrations, manage events, review family profiles. Everything your children's ministry team needs in one admin view.</p>
+</div>
+<div class="card">
+<svg class="card-icon" viewBox="0 0 40 40" fill="none" style="color:var(--campfire)"><circle cx="14" cy="20" r="6" stroke="currentColor" stroke-width="2.5"/><circle cx="26" cy="20" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M20 16v8" stroke="currentColor" stroke-width="2" opacity=".5"/></svg>
+<h3>PCO Keeps Working</h3>
+<p>Changes in Kidspire flow to Planning Center, and vice versa. Your team doesn't change their workflow — they just get a better front door.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WAVE: page-bg → verde -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 40 Q200 0 400 35 Q600 70 800 30 Q1000 0 1200 45 L1200 80 L0 80Z" fill="#F0FAF5"/>
+</svg>
+</div>
+
+<!-- DEPLOY -->
+<section class="section" style="background:#F0FAF5;padding-top:2rem">
+<div class="section-inner">
+<div class="deploy-header fade-in">
+<p class="eyebrow eyebrow-turquoise">Get Started</p>
+<h2>From zero to running in minutes</h2>
+</div>
+<div class="steps fade-in">
+<div class="step">
+<svg class="step-icon" viewBox="0 0 56 56" fill="none"><path d="M28 8l16 28H12L28 8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M28 20v10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M22 40l6-6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="step-number">1</div>
+<h3>Click Deploy on Railway</h3>
+<p>One click and your infrastructure is live.</p>
+</div>
+<div class="step">
+<svg class="step-icon" viewBox="0 0 56 56" fill="none"><rect x="12" y="16" width="32" height="24" rx="4" stroke="currentColor" stroke-width="2.5"/><circle cx="22" cy="28" r="3" fill="currentColor" opacity=".5"/><path d="M30 26h10M30 30h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+<div class="step-number">2</div>
+<h3>Set your environment variables</h3>
+<p>Paste your API keys and you're configured.</p>
+</div>
+<div class="step">
+<svg class="step-icon" viewBox="0 0 56 56" fill="none"><path d="M18 24l-8 4 8 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 24l8 4-8 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 36l8-16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+<div class="step-number">3</div>
+<h3>Connect Planning Center</h3>
+<p>Two-way sync starts working automatically.</p>
+</div>
+</div>
+<div class="deploy-footer fade-in">
+<a href="https://github.com/5stones-io/kidspire" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Deploy Kidspire Now</a>
+<p>Or self-host anywhere that runs Ruby on Rails.</p>
+</div>
+</div>
+</section>
+
+<!-- WAVE: verde → footer -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0 L0 40 Q200 75 400 40 Q600 5 800 45 Q1000 75 1200 35 L1200 0Z" fill="#F0FAF5"/>
+</svg>
+</div>
+
+<!-- FOOTER WAVE -->
+<div class="footer-wave">
+<svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 60 Q150 20 300 50 Q450 80 600 45 Q750 10 900 55 Q1050 90 1200 50 L1200 120 L0 120Z" fill="#2C1A0E"/>
+<ellipse cx="200" cy="70" rx="10" ry="6" fill="#6B4F3A"/>
+<ellipse cx="400" cy="58" rx="8" ry="5" fill="#7A5E46"/>
+<ellipse cx="600" cy="52" rx="9" ry="5.5" fill="#6B4F3A"/>
+<ellipse cx="800" cy="62" rx="8" ry="5" fill="#7A5E46"/>
+<ellipse cx="1000" cy="68" rx="10" ry="6" fill="#6B4F3A"/>
+<path d="M0 75 Q200 65 400 72 Q600 60 800 70 Q1000 62 1200 68 L1200 120 L0 120Z" fill="rgba(0,197,205,.15)"/>
+</svg>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-inner">
+<div>
+<div class="footer-logo">
+<svg width="24" height="32" viewBox="0 0 32 40" fill="none">
+<ellipse cx="16" cy="36" rx="8" ry="4" fill="#C39953"/>
+<ellipse cx="16" cy="28.5" rx="7" ry="3.6" fill="#C39953"/>
+<ellipse cx="16" cy="21.5" rx="6.2" ry="3.2" fill="#C39953"/>
+<ellipse cx="16" cy="15.2" rx="5.4" ry="2.9" fill="#C39953"/>
+<ellipse cx="16" cy="9.5" rx="4.6" ry="2.6" fill="#C39953"/>
+<ellipse cx="13" cy="34.5" rx="3" ry="1.2" fill="rgba(255,255,255,.15)" transform="rotate(-8 13 34.5)"/>
+<ellipse cx="13.5" cy="27" rx="2.6" ry="1" fill="rgba(255,255,255,.15)" transform="rotate(-8 13.5 27)"/>
+<ellipse cx="13.8" cy="20.2" rx="2.2" ry=".9" fill="rgba(255,255,255,.15)" transform="rotate(-8 13.8 20.2)"/>
+<ellipse cx="14" cy="14" rx="1.9" ry=".8" fill="rgba(255,255,255,.15)" transform="rotate(-8 14 14)"/>
+<ellipse cx="14.2" cy="8.5" rx="1.6" ry=".7" fill="rgba(255,255,255,.15)" transform="rotate(-8 14.2 8.5)"/>
+</svg>
+5stones Software
+</div>
+<p>Open source tools for the local church</p>
+<p style="margin-top:.75rem"><a href="mailto:hello@5stones.io" style="color:var(--turquoise)">hello@5stones.io</a></p>
+</div>
+<div>
+<h4>Suite</h4>
+<ul class="footer-links">
+<li><a href="kidspire.html">Kidspire</a></li>
+<li><span class="muted-link">Youthspire — Coming Soon</span></li>
+<li><span class="muted-link">Seniorspire — Coming Soon</span></li>
+<li><span class="muted-link">churchcred — Coming Soon</span></li>
+</ul>
+</div>
+<div>
+<h4>Links</h4>
+<ul class="footer-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="https://github.com/5stones-io" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+<li><a href="https://5stones.io" target="_blank" rel="noopener noreferrer">5stones.io</a></li>
+<li><a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT License</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+© 2026 5stones Software · Built with ♥ for the local church · hello@5stones.io
+</div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

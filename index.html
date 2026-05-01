@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior:smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5stones Software — Open Source Church Software</title>
+<meta name="description" content="5stones Software builds open source tools churches can actually own — no per-seat pricing, no vendor lock-in, no platform you don't control.">
+<meta name="author" content="5stones Software">
+<meta property="og:title" content="5stones Software — Open Source Church Software">
+<meta property="og:description" content="Open source tools churches can actually own. Start with Kidspire, our children's ministry portal.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://5stones.io">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--turquoise:#00C5CD;
+--tussock:#C39953;
+--chenin:#DECC6F;
+--jade:#EDF6E4;
+--verde:#F0FAF5;
+--campfire:#88654E;
+--body-text:#2C1A0E;
+--muted:#8B6855;
+--border:#E8D5C4;
+--footer-bg:#2C1A0E;
+--page-bg:#FDFAF7;
+--grass1:#C6E3A4;
+--grass2:#A0D6B4;
+--stone-dark:#88654E;
+--stone-light:#C39953;
+--water:rgba(0,197,205,0.6);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--body-text);background:var(--page-bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* Fade-in */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:100;background:var(--page-bg);padding:0 2rem;transition:box-shadow .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.scrolled{border-bottom-color:var(--border);box-shadow:0 2px 16px rgba(44,26,14,.08)}
+.nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.25rem;color:var(--campfire)}
+.nav-links{display:flex;align-items:center;gap:1.5rem}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--campfire);transition:color .2s}
+.nav-links a:hover{color:var(--turquoise)}
+.nav-links .btn-primary{color:#fff}
+.nav-links .btn-primary:hover{color:#fff;background:#00a0a8;border-color:#00a0a8}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:.6rem 1.4rem;border-radius:1rem;font-weight:600;font-size:.9rem;transition:all .2s;cursor:pointer;border:2px solid transparent}
+.btn-primary{background:var(--turquoise);color:#fff;border-color:var(--turquoise)}
+.btn-primary:hover{background:#00b0b8;border-color:#00b0b8}
+.btn-outline{background:transparent;color:var(--campfire);border-color:var(--campfire)}
+.btn-outline:hover{background:var(--campfire);color:#fff}
+
+/* Sections */
+.section{padding:5rem 2rem}
+.section-inner{max-width:1120px;margin:0 auto}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.eyebrow-tussock{color:var(--tussock)}
+.eyebrow-turquoise{color:var(--turquoise)}
+h1,h2,h3{color:var(--campfire);line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800}
+h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+
+/* Hero */
+.hero-text{max-width:680px;margin:0 auto;text-align:center}
+.hero-text p{margin-top:1rem;font-size:1.1rem;color:var(--muted);max-width:540px;margin-left:auto;margin-right:auto}
+.hero-buttons{display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+.hero-muted{text-align:center;margin-top:1rem;font-size:.8rem;color:var(--muted)}
+.hero-illustration{margin-top:3rem;width:100%;overflow:hidden}
+.hero-illustration svg{width:100%;height:auto;display:block}
+
+/* Wave dividers */
+.wave-divider{width:100%;line-height:0;overflow:hidden}
+.wave-divider svg{width:100%;height:auto;display:block}
+
+/* Kidspire highlight */
+.kidspire-highlight{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.badges{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}
+.badge{padding:.4rem 1rem;border-radius:2rem;font-size:.8rem;font-weight:600}
+.badge-turquoise{background:var(--turquoise);color:#fff}
+.badge-tussock-fill{background:var(--tussock);color:#fff}
+.badge-tussock{background:transparent;color:var(--tussock);border:2px solid var(--tussock)}
+
+/* Framework */
+.framework-header{text-align:center;max-width:680px;margin:0 auto}
+.framework-header p{margin-top:1rem;color:var(--muted);font-size:1.05rem}
+.framework-badges{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+
+/* Philosophy */
+.philosophy-header{text-align:center;max-width:680px;margin:0 auto}
+.philosophy-header p{margin-top:1rem;color:var(--muted);font-size:1.05rem}
+.philosophy-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.card{background:#fff;border:1px solid var(--border);border-radius:1.5rem;padding:2rem 1.5rem;position:relative;overflow:hidden}
+.card h3{margin:.75rem 0 .5rem}
+.card p{font-size:.9rem;color:var(--muted);line-height:1.5}
+.card-icon{width:40px;height:40px;color:var(--turquoise)}
+.card-stone{position:absolute;top:12px;right:14px;opacity:.25}
+
+/* Footer */
+.footer-wave{width:100%;line-height:0;overflow:hidden}
+.footer{background:var(--footer-bg);color:var(--page-bg);padding:4rem 2rem 0}
+.footer-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+.footer h4{color:var(--chenin);font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.footer p{font-size:.9rem;line-height:1.6;opacity:.8}
+.footer a{transition:color .2s}
+.footer a:hover{color:var(--turquoise)}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem;font-size:.9rem}
+.footer-links a{color:var(--turquoise)}
+.footer-links .muted-link{color:rgba(253,250,247,.45)}
+.footer-bottom{border-top:1px solid rgba(253,250,247,.1);margin-top:3rem;padding:1.5rem 2rem;text-align:center;font-size:.8rem;opacity:.6}
+.footer-logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.1rem;color:var(--tussock);margin-bottom:.75rem}
+
+/* Responsive */
+@media(max-width:768px){
+.kidspire-highlight{grid-template-columns:1fr}
+.philosophy-cards{grid-template-columns:1fr}
+.footer-inner{grid-template-columns:1fr;gap:2rem}
+.nav-links .gh-text{display:none}
+.kidspire-illustration{max-width:320px;margin:0 auto}
+}
+@media(max-width:480px){
+.section{padding:3rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+<a href="index.html" class="nav-logo">
+<svg width="32" height="40" viewBox="0 0 32 40" fill="none">
+<ellipse cx="16" cy="36" rx="8" ry="4" fill="url(#sg1)"/>
+<ellipse cx="16" cy="28.5" rx="7" ry="3.6" fill="url(#sg2)"/>
+<ellipse cx="16" cy="21.5" rx="6.2" ry="3.2" fill="url(#sg3)"/>
+<ellipse cx="16" cy="15.2" rx="5.4" ry="2.9" fill="url(#sg4)"/>
+<ellipse cx="16" cy="9.5" rx="4.6" ry="2.6" fill="url(#sg5)"/>
+<ellipse cx="13" cy="34.5" rx="3" ry="1.2" fill="rgba(255,255,255,.25)" transform="rotate(-8 13 34.5)"/>
+<ellipse cx="13.5" cy="27" rx="2.6" ry="1" fill="rgba(255,255,255,.25)" transform="rotate(-8 13.5 27)"/>
+<ellipse cx="13.8" cy="20.2" rx="2.2" ry=".9" fill="rgba(255,255,255,.25)" transform="rotate(-8 13.8 20.2)"/>
+<ellipse cx="14" cy="14" rx="1.9" ry=".8" fill="rgba(255,255,255,.25)" transform="rotate(-8 14 14)"/>
+<ellipse cx="14.2" cy="8.5" rx="1.6" ry=".7" fill="rgba(255,255,255,.25)" transform="rotate(-8 14.2 8.5)"/>
+<defs>
+<linearGradient id="sg1" x1="8" y1="32" x2="24" y2="40"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg2" x1="9" y1="25" x2="23" y2="32"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg3" x1="10" y1="18" x2="22" y2="25"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg4" x1="11" y1="12" x2="21" y2="18"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<linearGradient id="sg5" x1="11" y1="7" x2="21" y2="12"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+</defs>
+</svg>
+5stones
+</a>
+<div class="nav-links">
+<a href="kidspire.html">Kidspire</a>
+<a href="https://github.com/5stones-io" target="_blank" rel="noopener noreferrer" class="gh-text">GitHub</a>
+<a href="https://github.com/5stones-io/kidspire" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get Kidspire</a>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="section" style="padding-bottom:0">
+<div class="section-inner hero-text fade-in">
+<p class="eyebrow eyebrow-tussock">Open source church software</p>
+<h1>Give your church a digital presence worth showing up for</h1>
+<p>5stones Software builds open source tools churches can actually own — no per-seat pricing, no vendor lock-in, no platform you don't control.</p>
+<div class="hero-buttons">
+<a href="kidspire.html" class="btn btn-primary">Explore Kidspire</a>
+<a href="https://github.com/5stones-io" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View on GitHub</a>
+</div>
+<p class="hero-muted">Free and open source. MIT licensed. Deploy on Railway in minutes.</p>
+</div>
+
+<!-- Hero Illustration -->
+<div class="hero-illustration fade-in">
+<svg viewBox="0 0 1200 340" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="riverG" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#00C5CD" stop-opacity=".5"/>
+<stop offset=".5" stop-color="#00C5CD" stop-opacity=".65"/>
+<stop offset="1" stop-color="#00C5CD" stop-opacity=".45"/>
+</linearGradient>
+<linearGradient id="bankG" x1="0" y1="200" x2="0" y2="340"><stop stop-color="#B8956E"/><stop offset="1" stop-color="#A07850"/></linearGradient>
+<linearGradient id="hs" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#88654E"/><stop offset="1" stop-color="#C39953"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<path d="M0 140 Q150 110 300 130 Q500 100 700 125 Q900 105 1050 120 Q1150 115 1200 125 L1200 180 Q1000 170 800 185 Q600 175 400 190 Q200 180 0 185Z" fill="#D4EDBC" opacity=".7"/>
+<path d="M0 155 Q200 140 400 160 Q600 145 800 158 Q1000 150 1200 155 L1200 185 Q1000 175 800 188 Q600 178 400 192 Q200 182 0 188Z" fill="#A0D6B4" opacity=".6"/>
+<path d="M0 185 Q200 175 400 190 Q600 178 800 188 Q1000 180 1200 185 L1200 240 Q1000 250 800 242 Q600 252 400 245 Q200 255 0 248Z" fill="url(#riverG)"/>
+<path d="M120 205 Q160 200 200 205" stroke="rgba(255,255,255,.5)" stroke-width="1.5" fill="none"/>
+<path d="M350 215 Q400 210 450 216" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none"/>
+<path d="M600 202 Q650 197 700 203" stroke="rgba(255,255,255,.45)" stroke-width="1.5" fill="none"/>
+<path d="M850 218 Q900 213 950 219" stroke="rgba(255,255,255,.35)" stroke-width="1.2" fill="none"/>
+<path d="M250 220 Q280 217 310 221" stroke="rgba(255,255,255,.3)" stroke-width="1" fill="none"/>
+<path d="M750 210 Q790 206 830 211" stroke="rgba(255,255,255,.3)" stroke-width="1" fill="none"/>
+<path d="M500 222 Q540 218 580 223" stroke="rgba(255,255,255,.35)" stroke-width="1" fill="none"/>
+<path d="M0 245 Q150 235 300 242 Q500 232 700 240 Q900 234 1050 238 Q1150 236 1200 238 L1200 340 L0 340Z" fill="url(#bankG)"/>
+<g fill="#C6E3A4">
+<path d="M40 242 Q42 220 44 242 Q46 218 48 242 Q50 225 52 242Z"/>
+<path d="M90 240 Q93 215 96 240 Q98 220 100 240Z"/>
+<path d="M160 238 Q163 212 166 238 Q168 218 170 238 Q172 222 174 238Z"/>
+<path d="M310 240 Q313 218 316 240 Q318 222 320 240Z"/>
+<path d="M450 236 Q452 210 454 236 Q456 215 458 236 Q460 220 462 236Z"/>
+<path d="M700 238 Q703 212 706 238 Q708 218 710 238Z"/>
+<path d="M850 240 Q852 216 854 240 Q856 220 858 240 Q860 224 862 240Z"/>
+<path d="M1000 237 Q1002 215 1004 237 Q1006 218 1008 237Z"/>
+<path d="M1100 240 Q1103 216 1106 240 Q1108 222 1110 240Z"/>
+</g>
+<g fill="#A0D6B4">
+<path d="M70 241 Q72 222 74 241 Q76 226 78 241Z"/>
+<path d="M130 239 Q132 218 134 239 Q136 222 138 239Z"/>
+<path d="M250 241 Q253 220 256 241Z"/>
+<path d="M380 238 Q382 214 384 238 Q386 218 388 238Z"/>
+<path d="M550 237 Q553 215 556 237 Q558 222 560 237Z"/>
+<path d="M780 240 Q782 220 784 240 Q786 225 788 240Z"/>
+<path d="M950 239 Q952 218 954 239 Q956 222 958 239Z"/>
+</g>
+<ellipse cx="180" cy="268" rx="6" ry="4" fill="#9E7E65" opacity=".6"/>
+<ellipse cx="290" cy="275" rx="5" ry="3.5" fill="#A8886E" opacity=".5"/>
+<ellipse cx="420" cy="260" rx="4" ry="3" fill="#9E7E65" opacity=".5"/>
+<ellipse cx="520" cy="272" rx="5.5" ry="3.5" fill="#B09478" opacity=".55"/>
+<ellipse cx="680" cy="265" rx="4.5" ry="3" fill="#9E7E65" opacity=".5"/>
+<ellipse cx="820" cy="270" rx="5" ry="3.5" fill="#A8886E" opacity=".5"/>
+<ellipse cx="960" cy="262" rx="4" ry="3" fill="#9E7E65" opacity=".5"/>
+<ellipse cx="1060" cy="268" rx="5" ry="3" fill="#A8886E" opacity=".55"/>
+<g>
+<line x1="210" y1="248" x2="210" y2="234" stroke="#7CB068" stroke-width="1.5"/>
+<circle cx="210" cy="232" r="3" fill="#DECC6F"/>
+<line x1="540" y1="244" x2="540" y2="228" stroke="#7CB068" stroke-width="1.5"/>
+<circle cx="540" cy="226" r="3.5" fill="#C39953"/>
+<circle cx="542" cy="224" r="2" fill="#DECC6F"/>
+<line x1="900" y1="246" x2="900" y2="230" stroke="#7CB068" stroke-width="1.5"/>
+<circle cx="900" cy="228" r="3" fill="#DECC6F"/>
+</g>
+<g stroke="#8BB07A" stroke-width="1.5" fill="none">
+<path d="M480 240 Q478 220 482 205"/>
+<path d="M484 240 Q486 222 483 208"/>
+<path d="M760 238 Q758 218 762 200"/>
+<path d="M764 238 Q766 220 763 204"/>
+</g>
+<g filter="url(#glow)">
+<ellipse cx="340" cy="256" rx="18" ry="12" fill="url(#hs)"/>
+<ellipse cx="335" cy="253" rx="7" ry="3.5" fill="rgba(255,255,255,.22)" transform="rotate(-10 335 253)"/>
+<ellipse cx="340" cy="256" rx="20" ry="14" fill="none" stroke="#DECC6F" stroke-width=".8" opacity=".4"/>
+<ellipse cx="430" cy="252" rx="16" ry="11" fill="url(#hs)" transform="rotate(5 430 252)"/>
+<ellipse cx="426" cy="249" rx="6" ry="3" fill="rgba(255,255,255,.2)" transform="rotate(-8 426 249)"/>
+<ellipse cx="430" cy="252" rx="18" ry="13" fill="none" stroke="#DECC6F" stroke-width=".8" opacity=".35"/>
+<ellipse cx="570" cy="250" rx="17" ry="11.5" fill="url(#hs)" transform="rotate(-3 570 250)"/>
+<ellipse cx="565" cy="247" rx="6.5" ry="3" fill="rgba(255,255,255,.22)" transform="rotate(-12 565 247)"/>
+<ellipse cx="570" cy="250" rx="19" ry="13.5" fill="none" stroke="#DECC6F" stroke-width=".8" opacity=".4"/>
+<ellipse cx="660" cy="254" rx="15" ry="10.5" fill="url(#hs)" transform="rotate(8 660 254)"/>
+<ellipse cx="656" cy="251" rx="5.5" ry="2.8" fill="rgba(255,255,255,.2)" transform="rotate(-6 656 251)"/>
+<ellipse cx="660" cy="254" rx="17" ry="12.5" fill="none" stroke="#DECC6F" stroke-width=".8" opacity=".35"/>
+<ellipse cx="780" cy="253" rx="16.5" ry="11" fill="url(#hs)" transform="rotate(-6 780 253)"/>
+<ellipse cx="775" cy="250" rx="6" ry="3" fill="rgba(255,255,255,.22)" transform="rotate(-10 775 250)"/>
+<ellipse cx="780" cy="253" rx="18.5" ry="13" fill="none" stroke="#DECC6F" stroke-width=".8" opacity=".4"/>
+</g>
+<ellipse cx="340" cy="268" rx="16" ry="4" fill="rgba(44,26,14,.12)"/>
+<ellipse cx="430" cy="264" rx="14" ry="3.5" fill="rgba(44,26,14,.1)"/>
+<ellipse cx="570" cy="262" rx="15" ry="4" fill="rgba(44,26,14,.12)"/>
+<ellipse cx="660" cy="266" rx="13" ry="3.5" fill="rgba(44,26,14,.1)"/>
+<ellipse cx="780" cy="265" rx="14.5" ry="3.5" fill="rgba(44,26,14,.11)"/>
+</svg>
+</div>
+</section>
+
+<!-- WAVE: page-bg → jade -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 40 Q150 0 300 30 Q450 65 600 35 Q750 5 900 40 Q1050 70 1200 30 L1200 80 L0 80Z" fill="#EDF6E4"/>
+</svg>
+</div>
+
+<!-- KIDSPIRE HIGHLIGHT -->
+<section class="section" style="background:#EDF6E4;padding-top:2rem">
+<div class="section-inner">
+<div class="kidspire-highlight fade-in">
+<!-- Illustration -->
+<div class="kidspire-illustration">
+<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+<rect x="120" y="140" width="160" height="140" rx="12" fill="#88654E"/>
+<rect x="130" y="150" width="140" height="120" rx="8" fill="#A07850"/>
+<path d="M100 145 L200 70 L300 145Z" fill="#C39953"/>
+<rect x="190" y="40" width="20" height="35" rx="4" fill="#C39953"/>
+<circle cx="200" cy="38" r="10" fill="#00C5CD" opacity=".8"/>
+<circle cx="200" cy="38" r="14" fill="#00C5CD" opacity=".2"/>
+<rect x="175" y="220" width="50" height="60" rx="25" ry="25" fill="#5E3F2E"/>
+<rect x="145" y="175" width="30" height="35" rx="6" fill="#DECC6F" opacity=".7"/>
+<rect x="225" y="175" width="30" height="35" rx="6" fill="#DECC6F" opacity=".7"/>
+<line x1="160" y1="175" x2="160" y2="210" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<line x1="145" y1="192" x2="175" y2="192" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<line x1="240" y1="175" x2="240" y2="210" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<line x1="225" y1="192" x2="255" y2="192" stroke="#C39953" stroke-width="2" opacity=".5"/>
+<ellipse cx="200" cy="285" rx="160" ry="20" fill="#A0D6B4" opacity=".4"/>
+<g fill="#5E3F2E" opacity=".5">
+<ellipse cx="130" cy="252" rx="6" ry="6"/>
+<rect x="125" y="258" width="10" height="22" rx="4"/>
+<ellipse cx="110" cy="255" rx="5.5" ry="5.5"/>
+<rect x="105.5" y="260" width="9" height="20" rx="4"/>
+<ellipse cx="122" cy="262" rx="4" ry="4"/>
+<rect x="119" y="266" width="6" height="14" rx="3"/>
+</g>
+</svg>
+</div>
+<!-- Text -->
+<div>
+<p class="eyebrow eyebrow-tussock">Now Available</p>
+<h2>Kidspire</h2>
+<p style="font-size:1.15rem;color:var(--campfire);font-weight:600;margin:.5rem 0">The children's ministry portal your families will actually use</p>
+<p style="color:var(--muted);margin-top:.75rem">A family portal, event registration system, and Planning Center sync — all in one self-hostable, open source package built for children's ministry.</p>
+<div class="badges">
+<span class="badge badge-turquoise">Open source · MIT licensed</span>
+<span class="badge badge-tussock">Deploy on Railway in minutes</span>
+</div>
+<div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+<a href="kidspire.html" class="btn btn-primary">Learn More About Kidspire</a>
+<a href="https://github.com/5stones-io/kidspire" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View on GitHub</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WAVE: jade → page-bg -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0 L0 40 Q150 70 300 45 Q450 15 600 50 Q750 75 900 40 Q1050 10 1200 45 L1200 0Z" fill="#EDF6E4"/>
+</svg>
+</div>
+
+<!-- INSPIRE FRAMEWORK -->
+<section class="section" style="background:var(--page-bg)">
+<div class="section-inner">
+<div class="framework-header fade-in">
+<p class="eyebrow eyebrow-tussock">Coming Soon</p>
+<h2>One framework. Every ministry.</h2>
+<p>Kidspire is the first module built on Inspire — the open source church engagement framework at the heart of 5stones Software. Every ministry in your church deserves the same quality experience. The same foundation will power portals for youth groups, senior ministries, and more.</p>
+<div class="framework-badges">
+<span class="badge badge-turquoise">Kidspire — Available Now</span>
+<span class="badge badge-tussock">Youthspire — Coming Soon</span>
+<span class="badge badge-tussock">Seniorspire — Coming Soon</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WAVE: page-bg → verde -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 40 Q200 0 400 35 Q600 70 800 30 Q1000 0 1200 45 L1200 80 L0 80Z" fill="#F0FAF5"/>
+</svg>
+</div>
+
+<!-- PHILOSOPHY -->
+<section class="section" style="background:#F0FAF5;padding-top:2rem">
+<div class="section-inner">
+<div class="fade-in" style="text-align:center;margin-bottom:2rem">
+<svg width="120" height="100" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="60" cy="88" rx="55" ry="10" fill="#B8956E" opacity=".3"/>
+<ellipse cx="25" cy="82" rx="9" ry="6" fill="url(#hs)"/>
+<ellipse cx="25" cy="82" rx="9" ry="6" fill="none" stroke="#DECC6F" stroke-width=".5" opacity=".4"/>
+<ellipse cx="43" cy="80" rx="8" ry="5.5" fill="url(#hs)"/>
+<ellipse cx="60" cy="81" rx="8.5" ry="5.8" fill="url(#hs)"/>
+<ellipse cx="77" cy="80" rx="8" ry="5.5" fill="url(#hs)"/>
+<ellipse cx="95" cy="82" rx="9" ry="6" fill="url(#hs)"/>
+<path d="M70 20 Q72 30 74 42 Q76 48 80 52 L78 56 Q72 52 70 44 Q68 36 66 24Z" fill="#C9A080" opacity=".8"/>
+<path d="M66 24 Q64 34 62 42 Q60 48 56 52 L58 56 Q64 52 66 44 Q68 36 70 24Z" fill="#D4B090" opacity=".7"/>
+<ellipse cx="68" cy="53" rx="10" ry="5" fill="#C9A080" opacity=".7" transform="rotate(-5 68 53)"/>
+<ellipse cx="68" cy="60" rx="7" ry="4.5" fill="url(#hs)"/>
+<ellipse cx="66" cy="58.5" rx="2.5" ry="1.2" fill="rgba(255,255,255,.25)" transform="rotate(-10 66 58.5)"/>
+<ellipse cx="68" cy="60" rx="9" ry="6.5" fill="none" stroke="#DECC6F" stroke-width=".6" opacity=".5"/>
+</svg>
+</div>
+<div class="philosophy-header fade-in">
+<p class="eyebrow eyebrow-turquoise">Why 5stones</p>
+<h2>Pick up the stones you need</h2>
+<p>David didn't need an army. He needed five smooth stones — precise, purposeful, chosen with intention. 5stones Software builds focused tools your church can stand on. Not a platform. Not a subscription. A set of tools your team actually controls.</p>
+</div>
+<div class="philosophy-cards fade-in">
+<div class="card">
+<svg class="card-stone" width="18" height="12" viewBox="0 0 18 12"><ellipse cx="9" cy="6" rx="9" ry="6" fill="url(#hs)" opacity=".2"/></svg>
+<svg class="card-icon" viewBox="0 0 40 40" fill="none" style="color:var(--campfire)"><path d="M20 6v28M6 20h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="8" y="8" width="24" height="24" rx="4" stroke="currentColor" stroke-width="2" opacity=".4"/></svg>
+<h3>Open Source</h3>
+<p>MIT licensed. Fork it, modify it, own it. No black boxes.</p>
+</div>
+<div class="card">
+<svg class="card-stone" width="16" height="10" viewBox="0 0 16 10"><ellipse cx="8" cy="5" rx="8" ry="5" fill="url(#hs)" opacity=".2"/></svg>
+<svg class="card-icon" viewBox="0 0 40 40" fill="none" style="color:var(--campfire)"><rect x="10" y="14" width="20" height="16" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M20 6v8M14 10h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="24" r="2" fill="currentColor"/></svg>
+<h3>Self-Hostable</h3>
+<p>Deploy on Railway in minutes. Your data stays in your database, on your terms.</p>
+</div>
+<div class="card">
+<svg class="card-stone" width="14" height="9" viewBox="0 0 14 9"><ellipse cx="7" cy="4.5" rx="7" ry="4.5" fill="url(#hs)" opacity=".2"/></svg>
+<svg class="card-icon" viewBox="0 0 40 40" fill="none" style="color:var(--campfire)"><circle cx="14" cy="20" r="6" stroke="currentColor" stroke-width="2.5"/><circle cx="26" cy="20" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M20 16v8" stroke="currentColor" stroke-width="2" opacity=".5"/></svg>
+<h3>PCO Native</h3>
+<p>Built around Planning Center Online from the ground up — not bolted on as an afterthought.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WAVE: verde → footer -->
+<div class="wave-divider">
+<svg viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0 L0 40 Q200 75 400 40 Q600 5 800 45 Q1000 75 1200 35 L1200 0Z" fill="#F0FAF5"/>
+</svg>
+</div>
+
+<!-- FOOTER WAVE -->
+<div class="footer-wave">
+<svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 60 Q150 20 300 50 Q450 80 600 45 Q750 10 900 55 Q1050 90 1200 50 L1200 120 L0 120Z" fill="#2C1A0E"/>
+<ellipse cx="200" cy="70" rx="10" ry="6" fill="#6B4F3A"/>
+<ellipse cx="400" cy="58" rx="8" ry="5" fill="#7A5E46"/>
+<ellipse cx="600" cy="52" rx="9" ry="5.5" fill="#6B4F3A"/>
+<ellipse cx="800" cy="62" rx="8" ry="5" fill="#7A5E46"/>
+<ellipse cx="1000" cy="68" rx="10" ry="6" fill="#6B4F3A"/>
+<path d="M0 75 Q200 65 400 72 Q600 60 800 70 Q1000 62 1200 68 L1200 120 L0 120Z" fill="rgba(0,197,205,.15)"/>
+</svg>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-inner">
+<div>
+<div class="footer-logo">
+<svg width="24" height="32" viewBox="0 0 32 40" fill="none">
+<ellipse cx="16" cy="36" rx="8" ry="4" fill="#C39953"/>
+<ellipse cx="16" cy="28.5" rx="7" ry="3.6" fill="#C39953"/>
+<ellipse cx="16" cy="21.5" rx="6.2" ry="3.2" fill="#C39953"/>
+<ellipse cx="16" cy="15.2" rx="5.4" ry="2.9" fill="#C39953"/>
+<ellipse cx="16" cy="9.5" rx="4.6" ry="2.6" fill="#C39953"/>
+<ellipse cx="13" cy="34.5" rx="3" ry="1.2" fill="rgba(255,255,255,.15)" transform="rotate(-8 13 34.5)"/>
+<ellipse cx="13.5" cy="27" rx="2.6" ry="1" fill="rgba(255,255,255,.15)" transform="rotate(-8 13.5 27)"/>
+<ellipse cx="13.8" cy="20.2" rx="2.2" ry=".9" fill="rgba(255,255,255,.15)" transform="rotate(-8 13.8 20.2)"/>
+<ellipse cx="14" cy="14" rx="1.9" ry=".8" fill="rgba(255,255,255,.15)" transform="rotate(-8 14 14)"/>
+<ellipse cx="14.2" cy="8.5" rx="1.6" ry=".7" fill="rgba(255,255,255,.15)" transform="rotate(-8 14.2 8.5)"/>
+</svg>
+5stones Software
+</div>
+<p>Open source tools for the local church</p>
+<p style="margin-top:.75rem"><a href="mailto:hello@5stones.io" style="color:var(--turquoise)">hello@5stones.io</a></p>
+</div>
+<div>
+<h4>Suite</h4>
+<ul class="footer-links">
+<li><a href="kidspire.html">Kidspire</a></li>
+<li><span class="muted-link">Youthspire — Coming Soon</span></li>
+<li><span class="muted-link">Seniorspire — Coming Soon</span></li>
+<li><span class="muted-link">churchcred — Coming Soon</span></li>
+</ul>
+</div>
+<div>
+<h4>Links</h4>
+<ul class="footer-links">
+<li><a href="https://github.com/5stones-io" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+<li><a href="https://5stones.io" target="_blank" rel="noopener noreferrer">5stones.io</a></li>
+<li><a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT License</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+© 2026 5stones Software · Built with ♥ for the local church · hello@5stones.io
+</div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
